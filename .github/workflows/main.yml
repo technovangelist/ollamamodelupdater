@@ -3,22 +3,30 @@ on:
   push:
     branches:
       - main
-
+      
 jobs:
-  compile:
-    strategy:
-      matrix: 
-        target: [{target: x86_64-unknown-linux-gnu, file: linux/ollamamodelupdate}, {target: x86_64-pc-windows-msvc, file: windows/ollamamodelupdate.exe}, {target: x86_64-apple-darwin, file: macos-x86/ollamamodelupdate}, {target: aarch64-apple-darwin, file: macos-arm64/ollamamodelupdate}]
+  changelog:
     runs-on: ubuntu-latest
-
+    outputs:
+      tag: ${{ steps.changelog.outputs.tag }}
+      skipped: ${{ steps.changelog.outputs.skipped }}
+      output: ${{steps.changelog.outputs.clean_changelog}}
     steps:
-      - uses: actions/checkout@v4
-
       - name: Conventional Changelog
         id: changelog
         uses: TriPSs/conventional-changelog-action@v4.1.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      
+  compile:
+    strategy:
+      matrix: 
+        target: [{target: x86_64-unknown-linux-gnu, file: linux/ollamamodelupdate}, {target: x86_64-pc-windows-msvc, file: windows/ollamamodelupdate.exe}, {target: x86_64-apple-darwin, file: macos-x86/ollamamodelupdate}, {target: aarch64-apple-darwin, file: macos-arm64/ollamamodelupdate}]
+    runs-on: ubuntu-latest
+    needs: changelog
+    steps:
+      - uses: actions/checkout@v4
+
 
       - uses: denoland/setup-deno@v1
         with: 
@@ -40,11 +48,11 @@ jobs:
       #       macos-arm64/ollamamodelupdate
       - name: Release
         uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        if: ${{ needs.changelog.outputs.skipped == 'false' }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ needs.changelog.outputs.tag }}
+          release_name: ${{ needs.changelog.outputs.tag }}
+          body: ${{ needs.changelog.outputs.output }}
           files: |
             linux/ollamamodelupdate
             windows/ollamamodelupdate.exe
