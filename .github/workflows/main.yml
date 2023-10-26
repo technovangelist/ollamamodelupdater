@@ -48,11 +48,11 @@ jobs:
       #       macos-x86/ollamamodelupdate
       #       macos-arm64/ollamamodelupdate
       - name: Release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         if: ${{ needs.changelog.outputs.skipped == 'false' }}
         with:
           tag_name: ${{ needs.changelog.outputs.tag }}
-          release_name: ${{ needs.changelog.outputs.tag }}
+          name: ${{ needs.changelog.outputs.tag }}
           body: ${{ needs.changelog.outputs.output }}
           files: |
             linux/ollamamodelupdate
