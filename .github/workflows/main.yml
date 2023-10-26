@@ -25,14 +25,12 @@ jobs:
         target: [{target: x86_64-unknown-linux-gnu, file: linux-ollamamodelupdate}, {target: x86_64-pc-windows-msvc, file: win-ollamamodelupdate.exe}, {target: x86_64-apple-darwin, file: macos-x86-ollamamodelupdate}, {target: aarch64-apple-darwin, file: macos-arm64-ollamamodelupdate}]
     runs-on: ubuntu-latest
     needs: changelog
+    if: ${{ needs.changelog.outputs.skipped == 'false' }}
     steps:
       - uses: actions/checkout@v4
-
-
       - uses: denoland/setup-deno@v1
         with: 
           deno-version: 1.37.2
-
       - run: 
           deno compile --allow-net --target ${{ matrix.target.target }} --output ${{ matrix.target.file}} update.ts
   

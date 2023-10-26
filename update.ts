@@ -19,10 +19,7 @@ for await (const model of localModels) {
 
   if (remoteModelInfo.status == 200) {
     const remoteModelInfoJSON = await remoteModelInfo.json()
-    // const jsonstring = JSON.stringify(remoteModelInfoJSON).replace(/\s+/g, '')
-    // const messageBuffer = new TextEncoder().encode(jsonstring);
-    // const hashBuffer = await crypto.subtle.digest("SHA-256", messageBuffer);
-    // const hash = encodeHex(hashBuffer);
+
     const hash = await jsonhash(remoteModelInfoJSON);
     if (hash === localdigest) {
       console.log(`You have the latest ${model.name}`)
@@ -43,7 +40,6 @@ for await (const model of localModels) {
       })
     }
   }
-
 }
 
 async function jsonhash(json: string) {
