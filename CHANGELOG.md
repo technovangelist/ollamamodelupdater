@@ -1,3 +1,12 @@
+## [0.1.6](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.5...v0.1.6) (2023-10-26)
+
+
+### Bug Fixes
+
+* cleanup ([22ee6fe](https://github.com/technovangelist/ollamamodelupdater/commit/22ee6fe186f6d542c3369743cb32cb6871523839))
+
+
+
 ## [0.1.5](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.4...v0.1.5) (2023-10-26)
 
 
@@ -32,15 +41,6 @@
 ### Bug Fixes
 
 * ttest ([9101ed7](https://github.com/technovangelist/ollamamodelupdater/commit/9101ed7b58c8c45b470704ffdeb3198a75baace1))
-
-
-
-## [0.1.1](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.0...v0.1.1) (2023-10-26)
-
-
-### Bug Fixes
-
-* more testing ([6e90f1f](https://github.com/technovangelist/ollamamodelupdater/commit/6e90f1f882f1f57312259bdbb3890b2bce660b98))
 
 
 
