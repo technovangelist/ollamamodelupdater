@@ -18,6 +18,6 @@ jobs:
           deno-version: 1.37.2
 
       - run: 
-          deno compile --allow-net --target ${{ matrix.target }} --output ./bin/main .update.ts
+          deno compile --allow-net --target ${{ matrix.target }} --output ./bin/main update.ts
       
       
