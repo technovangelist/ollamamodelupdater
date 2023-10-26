@@ -16,12 +16,14 @@ for await (const model of localModels) {
       "Accept": "application/vnd.docker.distribution.manifest.v2+json"
     }
   })
+
   if (remoteModelInfo.status == 200) {
     const remoteModelInfoJSON = await remoteModelInfo.json()
-    const jsonstring = JSON.stringify(remoteModelInfoJSON).replace(/\s+/g, '')
-    const messageBuffer = new TextEncoder().encode(jsonstring);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", messageBuffer);
-    const hash = encodeHex(hashBuffer);
+    // const jsonstring = JSON.stringify(remoteModelInfoJSON).replace(/\s+/g, '')
+    // const messageBuffer = new TextEncoder().encode(jsonstring);
+    // const hashBuffer = await crypto.subtle.digest("SHA-256", messageBuffer);
+    // const hash = encodeHex(hashBuffer);
+    const hash = await jsonhash(remoteModelInfoJSON);
     if (hash === localdigest) {
       console.log(`You have the latest ${model.name}`)
     } else {
@@ -38,10 +40,17 @@ for await (const model of localModels) {
         } catch (error) {
           console.log(error)
         }
-
       })
-
     }
   }
 
+}
+
+async function jsonhash(json: string) {
+  const jsonstring = JSON.stringify(json).replace(/\s+/g, '')
+  const messageBuffer = new TextEncoder().encode(jsonstring);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", messageBuffer);
+  const hash = encodeHex(hashBuffer);
+
+  return hash
 }

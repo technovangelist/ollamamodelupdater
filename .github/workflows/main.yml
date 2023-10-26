@@ -22,7 +22,7 @@ jobs:
   compile:
     strategy:
       matrix: 
-        target: [{target: x86_64-unknown-linux-gnu, file: linux/ollamamodelupdate}, {target: x86_64-pc-windows-msvc, file: windows/ollamamodelupdate.exe}, {target: x86_64-apple-darwin, file: macos-x86/ollamamodelupdate}, {target: aarch64-apple-darwin, file: macos-arm64/ollamamodelupdate}]
+        target: [{target: x86_64-unknown-linux-gnu, file: linux-ollamamodelupdate}, {target: x86_64-pc-windows-msvc, file: win-ollamamodelupdate.exe}, {target: x86_64-apple-darwin, file: macos-x86-ollamamodelupdate}, {target: aarch64-apple-darwin, file: macos-arm64-ollamamodelupdate}]
     runs-on: ubuntu-latest
     needs: changelog
     steps:
@@ -35,18 +35,7 @@ jobs:
 
       - run: 
           deno compile --allow-net --target ${{ matrix.target.target }} --output ${{ matrix.target.file}} update.ts
-      
-      # - uses: "marvinpinto/action-automatic-releases@latest"
-      #   with:
-      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     automatic_release_tag: "latest"
-      #     prerelease: false
-      #     title: "Latest Build"
-      #     files: |
-      #       linux/ollamamodelupdate
-      #       windows/ollamamodelupdate.exe
-      #       macos-x86/ollamamodelupdate
-      #       macos-arm64/ollamamodelupdate
+  
       - name: Release
         uses: softprops/action-gh-release@v1
         if: ${{ needs.changelog.outputs.skipped == 'false' }}
@@ -55,9 +44,9 @@ jobs:
           name: ${{ needs.changelog.outputs.tag }}
           body: ${{ needs.changelog.outputs.output }}
           files: |
-            linux/ollamamodelupdate
-            windows/ollamamodelupdate.exe
-            macos-x86/ollamamodelupdate
-            macos-arm64/ollamamodelupdate
+            linux-ollamamodelupdate
+            win-ollamamodelupdate.exe
+            macos-x86-ollamamodelupdate
+            macos-arm64-ollamamodelupdate
             
           token: ${{ secrets.GITHUB_TOKEN }}
