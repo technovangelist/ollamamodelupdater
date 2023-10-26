@@ -1,3 +1,12 @@
+## [0.1.4](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.3...v0.1.4) (2023-10-26)
+
+
+### Bug Fixes
+
+* ashtasht ([a3e8c22](https://github.com/technovangelist/ollamamodelupdater/commit/a3e8c22805ef42139564fbc463b9ae8e72b24208))
+
+
+
 ## [0.1.3](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.2...v0.1.3) (2023-10-26)
 
 
