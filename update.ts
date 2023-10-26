@@ -48,5 +48,3 @@ for await (const model of localModels) {
   }
 
 }
-
-//https://ollama.ai/v2/$REPO/manifests/$TAG -H "Accept:application/vnd.docker.distribution.manifest.v2+json"
