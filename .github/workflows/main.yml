@@ -12,6 +12,7 @@ jobs:
       skipped: ${{ steps.changelog.outputs.skipped }}
       output: ${{steps.changelog.outputs.clean_changelog}}
     steps:
+      - uses: actions/checkout@v4
       - name: Conventional Changelog
         id: changelog
         uses: TriPSs/conventional-changelog-action@v4.1.1
