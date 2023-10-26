@@ -1,5 +1,6 @@
 import { Ollama } from 'npm:ollama-node@0.1.13';
 import { encodeHex } from "https://deno.land/std@0.202.0/encoding/hex.ts";
+
 const ollama = new Ollama();
 
 const local_models_raw = await ollama.listModels()
@@ -8,9 +9,11 @@ const localModels = local_models_raw.complete.map((model) => ({ "name": model.na
 for await (const model of localModels) {
   const localdigest = model.digest
   let [repo, tag] = model.name.split(":")
+
   if (!repo.includes("/")) {
     repo = `library/${repo}`
   }
+  
   const remoteModelInfo = await fetch(`https://ollama.ai/v2/${repo}/manifests/${tag}`, {
     headers: {
       "Accept": "application/vnd.docker.distribution.manifest.v2+json"
