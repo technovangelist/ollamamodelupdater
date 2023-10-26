@@ -7,17 +7,26 @@ jobs:
   compile:
     strategy:
       matrix: 
-        target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-msvc, x86_64-apple-darwin, aarch64-apple-darwin]
+        target: [{target: x86_64-unknown-linux-gnu, file: linux/ollamamodelupdate}, {target: x86_64-pc-windows-msvc, file: windows/ollamamodelupdate.exe}, {target: x86_64-apple-darwin, file: macos-x86/ollamamodelupdate}, {target: aarch64-apple-darwin, file: macos-arm64/ollamamodelupdate}]
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: denoland/setup-deno@v1
         with: 
           deno-version: 1.37.2
 
       - run: 
-          deno compile --allow-net --target ${{ matrix.target }} --output ./bin/main update.ts
+          deno compile --allow-net --target ${{ matrix.target.target }} --output ${{ matrix.target.file}} update.ts
       
-      
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            linux/ollamamodelupdate
+            windows/ollamamodelupdate.exe
+            macos-x86/ollamamodelupdate
+            macos-arm64/ollamamodelupdate
+            
+          token: ${{ secrets.GITHUB_TOKEN }}
