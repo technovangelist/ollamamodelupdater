@@ -14,6 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Conventional Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3.7.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: denoland/setup-deno@v1
         with: 
           deno-version: 1.37.2
@@ -21,25 +27,28 @@ jobs:
       - run: 
           deno compile --allow-net --target ${{ matrix.target.target }} --output ${{ matrix.target.file}} update.ts
       
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
-          title: "Latest Build"
-          files: |
-            linux/ollamamodelupdate
-            windows/ollamamodelupdate.exe
-            macos-x86/ollamamodelupdate
-            macos-arm64/ollamamodelupdate
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
-      #   if: startsWith(github.ref, 'refs/tags/')
+      # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     automatic_release_tag: "latest"
+      #     prerelease: false
+      #     title: "Latest Build"
       #     files: |
       #       linux/ollamamodelupdate
       #       windows/ollamamodelupdate.exe
       #       macos-x86/ollamamodelupdate
       #       macos-arm64/ollamamodelupdate
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+          files: |
+            linux/ollamamodelupdate
+            windows/ollamamodelupdate.exe
+            macos-x86/ollamamodelupdate
+            macos-arm64/ollamamodelupdate
             
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
