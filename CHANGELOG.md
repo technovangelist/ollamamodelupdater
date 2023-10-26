@@ -1,3 +1,13 @@
+## [0.1.3](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.2...v0.1.3) (2023-10-26)
+
+
+### Bug Fixes
+
+* grr ([701e141](https://github.com/technovangelist/ollamamodelupdater/commit/701e14105b4adad3ec00f70b08baa3e5edfb2a3d))
+* more testing ([22dbfc3](https://github.com/technovangelist/ollamamodelupdater/commit/22dbfc329419c4db85544728d53d6c14278eda60))
+
+
+
 ## [0.1.2](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.1...v0.1.2) (2023-10-26)
 
 
