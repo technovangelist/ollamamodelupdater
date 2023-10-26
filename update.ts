@@ -13,7 +13,6 @@ for await (const model of localModels) {
   if (!repo.includes("/")) {
     repo = `library/${repo}`
   }
-  // console.log(repo);
   const remoteModelInfo = await fetch(`https://ollama.ai/v2/${repo}/manifests/${tag}`, {
     headers: {
       "Accept": "application/vnd.docker.distribution.manifest.v2+json"
