@@ -9,7 +9,7 @@ for await (const model of localModels) {
   const localdigest = model.digest
   let [repo, tag] = model.name.split(":")
   if (!repo.includes("/")) {
-    repo = ` library/${repo}`
+    repo = `library/${repo}`
   }
   const remoteModelInfo = await fetch(`https://ollama.ai/v2/${repo}/manifests/${tag}`, {
     headers: {
