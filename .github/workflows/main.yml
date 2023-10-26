@@ -1,7 +1,8 @@
 name: Deno Compile
 on:
   push:
-    branches: [ main ]
+    tags:
+      - '**'
 
 jobs:
   compile:
