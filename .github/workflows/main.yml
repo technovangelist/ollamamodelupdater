@@ -1,0 +1,23 @@
+name: Deno Compile
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  compile:
+    strategy:
+      matrix: 
+        target: [x86_64-unknown-linux-gnu, x86_64-pc-windows-msvc, x86_64-apple-darwin, aarch64-apple-darwin]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: denoland/setup-deno@v1
+        with: 
+          deno-version: 1.37.2
+
+      - run: 
+          deno compile --allow-net --target ${{ matrix.target }} --output ./bin/main .update.ts
+      
+      
