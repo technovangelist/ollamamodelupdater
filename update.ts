@@ -7,7 +7,6 @@ const localModels = local_models_raw.complete.map((model) => ({ "name": model.na
 
 for await (const model of localModels) {
   const localdigest = model.digest
-  // console.log(model)
   let [repo, tag] = model.name.split(":")
   if (!repo.includes("/")) {
     repo = `library/${repo}`
