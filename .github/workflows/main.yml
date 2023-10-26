@@ -39,7 +39,7 @@ jobs:
       #       macos-x86/ollamamodelupdate
       #       macos-arm64/ollamamodelupdate
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
