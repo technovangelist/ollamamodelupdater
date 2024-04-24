@@ -1,10 +1,8 @@
-import { Ollama } from 'npm:ollama-node@0.1.13';
 import { encodeHex } from "https://deno.land/std@0.202.0/encoding/hex.ts";
+import ollama from 'npm:ollama';
 
-const ollama = new Ollama();
-
-const local_models_raw = await ollama.listModels()
-const localModels = local_models_raw.complete.map((model) => ({ "name": model.name, "digest": model.digest }))
+const local_models_raw = await ollama.list();
+const localModels = local_models_raw.models.map((model) => ({ "name": model.name, "digest": model.digest }))
 
 for await (const model of localModels) {
   const localdigest = model.digest
@@ -29,18 +27,24 @@ for await (const model of localModels) {
     } else {
       console.log(`You have an outdated version of ${model.name}`)
       console.log(`Updating ${model.name}`)
-      await ollama.streamingPull(model.name, (chunk: string) => {
-        try {
-          const enc = (s: string) => new TextEncoder().encode(s);
-          if (chunk.includes("success")) {
-            Deno.stdout.write(enc(`\r\x1B[K${chunk}\n`))
-          } else {
-            Deno.stdout.write(enc(`\r\x1B[K${chunk}`))
+      const pullResponse = await ollama.pull({ model: model.name, stream: true }); 
+      const enc = (s: string) => new TextEncoder().encode(s);
+      let linelength = 0;
+      for await (const part of pullResponse) {
+        if (part.digest) {
+          let percent = 0;
+          if (part.completed && part.total) {
+            percent = Math.round((part.completed / part.total) * 100);
           }
-        } catch (error) {
-          console.log(error)
+          const clear = ` `.repeat(linelength);
+          Deno.stdout.write(enc(`\r${clear}\r${part.status} ${percent}%...`));
+          linelength = `${part.status} ${percent}%...`.length;
+          
+        } else {
+          
+          Deno.stdout.write(enc(`\r${' '.repeat(linelength)}\r${part.status}\n`));
         }
-      })
+      }
     }
   }
 }

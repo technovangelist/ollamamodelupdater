@@ -1,3 +1,6 @@
 {
-  "version": "0.1.7"
+  "version": "0.1.7",
+  "scripts": {
+    "dev": "deno run --allow-net update.ts"
+  }
 }
