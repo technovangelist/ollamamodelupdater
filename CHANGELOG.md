@@ -1,3 +1,12 @@
+## [0.1.8](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.7...v0.1.8) (2024-04-24)
+
+
+### Bug Fixes
+
+* remove reference to ollama-node ([1c290b1](https://github.com/technovangelist/ollamamodelupdater/commit/1c290b16091da87cc7f712c7367641054cfdc925))
+
+
+
 ## [0.1.7](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.6...v0.1.7) (2023-10-26)
 
 
@@ -31,16 +40,6 @@
 ### Bug Fixes
 
 * ashtasht ([a3e8c22](https://github.com/technovangelist/ollamamodelupdater/commit/a3e8c22805ef42139564fbc463b9ae8e72b24208))
-
-
-
-## [0.1.3](https://github.com/technovangelist/ollamamodelupdater/compare/v0.1.2...v0.1.3) (2023-10-26)
-
-
-### Bug Fixes
-
-* grr ([701e141](https://github.com/technovangelist/ollamamodelupdater/commit/701e14105b4adad3ec00f70b08baa3e5edfb2a3d))
-* more testing ([22dbfc3](https://github.com/technovangelist/ollamamodelupdater/commit/22dbfc329419c4db85544728d53d6c14278eda60))
 
 
 
